@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/predict', (req, res) => {
+app.post('/generate', (req, res) => {
     let text = req.body.text;
 
     // Call Python script to make prediction
