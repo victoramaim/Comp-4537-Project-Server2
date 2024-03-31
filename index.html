@@ -1,0 +1,64 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Generator</title>
+</head>
+<body>
+    <h1>Story Generator</h1>
+    <textarea id="prompt" rows="4" cols="50" placeholder="Enter prompt here..."></textarea><br>
+    <button onclick="generateStory()">Generate Story</button><br>
+    <div id="output"></div>
+
+    <script>
+        function generateStory() {
+            const prompt = document.getElementById('prompt').value;
+            fetch('/generate_story', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = data.story[0]['generated_text'];
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Generator</title>
+</head>
+<body>
+    <h1>Story Generator</h1>
+    <textarea id="prompt" rows="4" cols="50" placeholder="Enter prompt here..."></textarea><br>
+    <button onclick="generateStory()">Generate Story</button><br>
+    <div id="output"></div>
+
+    <script>
+        function generateStory() {
+            const prompt = document.getElementById('prompt').value;
+            fetch('/generate_story', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = data.story[0]['generated_text'];
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
