@@ -1,25 +1,19 @@
-# This is a sample Python script.
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Load the tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained("mosaicml/mpt-7b-storywriter", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("mosaicml/mpt-7b-storywriter", trust_remote_code=True)
 
-from transformers import pipeline
+# Prompt for text generation
+prompt_text = "Once upon a time,"
 
-classifier = pipeline("zero-shot-classification")
+# Encode the prompt text
+input_ids = tokenizer.encode(prompt_text, return_tensors="pt")
 
-res = classifier(
-    "This course is about Python lists comprehension",
-    candidate_labels=["education", "politics", "business"],
-)
+# Generate text based on the prompt
+output = model.generate(input_ids, max_length=150, num_return_sequences=1, temperature=0.7)
 
-print(res)
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# Decode and print the generated text
+generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
+print("Generated Story:")
+print(generated_text)
