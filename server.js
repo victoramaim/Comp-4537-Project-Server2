@@ -22,23 +22,35 @@ app.post('/generate', (req, res) => {
     pythonProcess.stdin.write(text);
     pythonProcess.stdin.end();
 
-    let generatedText = '';
+    // Promise to handle the response from Python script
+    const promise = new Promise((resolve, reject) => {
+        let generatedText = '';
 
-    // Collect data from Python script
-    pythonProcess.stdout.on('data', (data) => {
-        generatedText += data.toString();
+        // Collect data from Python script
+        pythonProcess.stdout.on('data', (data) => {
+            generatedText += data.toString();
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Error from Python script: ${data}`);
+            reject('An error occurred while making prediction');
+        });
+
+        // When the Python script finishes executing
+        pythonProcess.on('close', () => {
+            resolve(generatedText);
+        });
     });
 
-    pythonProcess.stderr.on('data', (data) => {
-        console.error(`Error from Python script: ${data}`);
-        res.status(500).json({ error: 'An error occurred while making prediction' });
-    });
-
-    // When the Python script finishes executing
-    pythonProcess.on('close', () => {
+    // Respond once the promise is resolved or rejected
+    promise.then((generatedText) => {
         res.json({ prediction: generatedText });
+    }).catch((error) => {
+        console.error(`Error: ${error}`);
+        res.status(500).json({ error });
     });
 });
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

@@ -1,9 +1,11 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
+
 def generate_story(prompt_text):
-    tokenizer = AutoTokenizer.from_pretrained("mosaicml/mpt-7b-storywriter")
-    model = AutoModelForCausalLM.from_pretrained("mosaicml/mpt-7b-storywriter")
+    model_path = "./mpt-7b-storywriter"
+    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, low_cpu_mem_usage=True)
+    model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, low_cpu_mem_usage=True)
 
     input_ids = tokenizer.encode(prompt_text, return_tensors="pt")
 
@@ -11,6 +13,7 @@ def generate_story(prompt_text):
 
     generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
     return generated_text
+
 
 if __name__ == "__main__":
     prompt_text = "Once upon a time,"
