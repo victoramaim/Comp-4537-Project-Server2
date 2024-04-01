@@ -1,0 +1,91 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Generate a Story</h1>
+    <form id="storyForm">
+        <label for="user_input">Enter your starting string:</label><br>
+        <input type="text" id="user_input" name="user_input" required><br>
+        <input type="submit" value="Generate">
+    </form>
+    <div id="generatedStory"></div>
+
+    <script>
+        $(document).ready(function(){
+            $('#storyForm').submit(function(e){
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/generate',
+                    data: formData,
+                    success: function(response){
+                        $('#generatedStory').html('<p><strong>Starting String:</strong> ' + response.user_input + '</p>' +
+                                                  '<p><strong>Generated Story:</strong></p>' +
+                                                  '<p>' + response.generated_story + '</p>');
+                    },
+                    error: function(xhr, status, error){
+                        alert('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Generate a Story</h1>
+    <form id="storyForm">
+        <label for="user_input">Enter your starting string:</label><br>
+        <input type="text" id="user_input" name="user_input" required><br>
+        
+        <label for="genre">Choose a genre:</label>
+        <select id="genre" name="genre">
+            <option value="superhero">Superhero</option>
+            <option value="action">Action</option>
+            <option value="drama">Drama</option>
+            <option value="horror">Horror</option>
+            <option value="thriller">Thriller</option>
+            <option value="sci_fi">Sci-Fi</option>
+        </select><br>
+        
+        <input type="submit" value="Generate">
+    </form>
+    <div id="generatedStory"></div>
+
+    <script>
+        $(document).ready(function(){
+            $('#storyForm').submit(function(e){
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/generate',
+                    data: formData,
+                    success: function(response){
+                        $('#generatedStory').html('<p><strong>Starting String:</strong> ' + response.user_input + '</p>' +
+                                                  '<p><strong>Generated Story:</strong></p>' +
+                                                  '<p>' + response.generated_story + '</p>');
+                    },
+                    error: function(xhr, status, error){
+                        alert('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
