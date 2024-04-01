@@ -1,5 +1,9 @@
 {
-    "rewrites": [
-      { "source": "/templates", "destination": "/index.html" }
-    ]
+    "version": 2,
+    "functions": {
+      "api/generate_story": {
+        "handler": "generate_story.generate_story"
+      }
+    }
   }
+  
