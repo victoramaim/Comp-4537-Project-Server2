@@ -34,7 +34,7 @@ from transformers import pipeline
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app, origins="*")  # Enable CORS for all routes
 
 story_gen = pipeline("text-generation", "pranavpsv/gpt2-genre-story-generator")
 
@@ -54,4 +54,3 @@ def generate_story():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
